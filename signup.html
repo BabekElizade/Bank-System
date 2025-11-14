@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bank Sign-up</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap");
+* { box-sizing: border-box; font-family: 'Fredoka', sans-serif; margin:0; padding:0; }
+body { height:100vh; display:flex; justify-content:center; align-items:center; background: linear-gradient(135deg, #6a11cb, #2575fc); }
+#signup-container { background:#fff; padding:40px 30px; border-radius:20px; width:350px; box-shadow:0 15px 25px rgba(0,0,0,0.2); text-align:center; }
+#signup-container h2 { margin-bottom:30px; color:#0a2647; }
+.input-group { position:relative; margin-bottom:25px; }
+.input-group i { position:absolute; top:12px; left:10px; color:#6a11cb; }
+input[type="text"], input[type="email"], input[type="password"] { width:100%; padding:12px 40px; border-radius:10px; border:1px solid #ccc; outline:none; transition:0.3s; }
+input:focus { border-color:#2575fc; box-shadow:0 0 5px #2575fc; }
+button { width:100%; padding:12px; background: linear-gradient(135deg, #6a11cb, #2575fc); border:none; border-radius:10px; color:#fff; font-size:16px; font-weight:bold; cursor:pointer; transition:0.3s; }
+button:hover { opacity:0.9; }
+#signup-footer { margin-top:20px; font-size:14px; color:#555; }
+#signup-footer a { color:#2575fc; text-decoration:none; }
+#signup-footer a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div id="signup-container">
+    <h2><i class="fa-solid fa-user-plus"></i> Sign Up</h2>
+
+    <div class="input-group">
+        <i class="fa-solid fa-user"></i>
+        <input type="text" id="username" placeholder="Username" required>
+    </div>
+    <div class="input-group">
+        <i class="fa-solid fa-envelope"></i>
+        <input type="email" id="email" placeholder="Email" required>
+    </div>
+    <div class="input-group">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" id="password" placeholder="Password" required>
+    </div>
+
+    <button onclick="signup()">Sign Up</button>
+
+    <div id="signup-footer">
+        Already have an account? <a href="LoginPage.html">Login</a>
+    </div>
+</div>
+
+<script>
+function signup() {
+    const username = document.getElementById('username').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    if(!username || !email || !password) { alert("Please fill in all fields."); return; }
+
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+
+    // Eyni istifadəçi yoxlanışı
+    if(users.find(u => u.email === email)) { alert("This email is already registered."); return; }
+
+    const newUser = { username, email, password, amount:0, history:[] };
+    users.push(newUser);
+    localStorage.setItem('users', JSON.stringify(users));
+
+    alert("Sign-up successful! You can now login.");
+    window.location.href = "LoginPage.html";
+}
+</script>
+
+</body>
+</html>

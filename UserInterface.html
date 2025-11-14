@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Panel</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap");
+
+* {
+    font-family: "Fredoka", sans-serif;
+}
+
+body {
+    background: linear-gradient(90deg, #e6ebf0, #f5f7fa);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container {
+    width: 86%;
+    height: 80vh;
+    margin-top: 5vh;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border-radius: 25px;
+}
+
+/* Sol tərəf */
+#left-container {
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(135deg, #0a2647, #144272);
+    border-radius: 15px;
+    float: left;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    color: white;
+}
+
+#title {
+    text-align: left;
+    font-size: 26px;
+    color: #ffffff;
+    margin-left: 20px;
+    margin-top: 20px;
+    letter-spacing: 1px;
+}
+
+/* Sağ tərəf */
+#right-container {
+    width: 55%;
+    height: 70vh;
+    margin-top: 6vh;
+    margin-right: 2vh;
+    background: #f8f9fb;
+    border-radius: 20px;
+    float: right;
+    padding: 0;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Form hissəsi */
+input[type="text"], input[type="number"] {
+    width: 72%;
+    height: 40px;
+    margin-left: 1%;
+    margin-bottom: 15px;
+    border: 1px solid #ccd6e0;
+    border-radius: 5px;
+    background-color: #fdfdfd;
+    color: #222;
+}
+
+input[type="text"]:focus, input[type="number"]:focus {
+    outline: none;
+    box-shadow: 0 0 5px #007bff;
+    border-color: #007bff;
+}
+
+button {
+    width: 150px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    margin-left: 5%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+button:hover {
+    background-color: #0056b3;
+    transition: 0.2s;
+}
+
+/* Məbləğ hissəsi */
+#amount-string, #amount-int, #money-symbol {
+    margin-left: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0a2647;
+}
+
+/* Valyuta seçimi */
+#currency-select {
+    width: 50%;
+    height: 40px;
+    margin-bottom: 15px;
+    margin-left: 1%;
+    border: 1px solid #ccd6e0;
+    border-radius: 5px;
+    background-color: #fdfdfd;
+    color: #222;
+}
+
+select:focus {
+    outline: none;
+    box-shadow: 0 0 5px #007bff;
+}
+
+/* İkonlar */
+i {
+    margin: 0;
+    padding: 10px;
+    color: #ffffff;
+}
+
+/* Tarixçə hissəsi */
+#history-container {
+    padding: 20px;
+}
+
+#history-entries {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccd6e0;
+    border-radius: 15px;
+    padding: 10px;
+    background-color: #ffffff;
+}
+#history-title {
+    margin-bottom: 10px;
+    color: #0a2647;
+}
+.history-entry {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #333;
+}
+.history-entry:last-child {
+    border-bottom: none;
+}
+.history-entry:hover {
+    background-color: #f2f6fb;
+}
+#form-container {
+    margin-top: 30px;
+    padding: 0 20px;
+}
+#progress-button {
+    margin-top: 10px;
+}
+#clear-history-button {
+    margin-top: 10px;
+    margin-right: 10px;
+    float: right;
+    background-color: #d9534f;
+}
+#clear-history-button:hover {
+    background-color: #c9302c;
+}
+
+#user-logout {
+  float:right;
+  border:none; 
+  border-radius:5px; 
+  background:#d9534f; 
+  color:white; 
+  cursor:pointer; 
+  margin: 15px;
+}
+
+#user-logout:hover{
+    background-color: #c9302c;
+}
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <span id="amount-string">Amount:</span><span id="amount-int" value="0">0</span><span id="money-symbol" style="margin:0;">₼</span>
+        <div id="left-container">
+            <h2 id="title">
+              <i class="fa-solid fa-building-columns"></i>Bank System</h2>
+            <div id="form-container">
+                <form id="bank-form">
+                    <i class="fa-solid fa-receipt"></i><input type="text" id="operation-number" placeholder="Enter Operation Number" required><br>
+                    <i class="fa-solid fa-money-bill-wave"></i><input type="number" id="initial-deposit" placeholder="Enter Initial Deposit" min="0" required><br>
+                    <i class="fa-solid fa-list"></i><select name="currency" id="currency-select">
+                        <option id="AZN" value="0">AZN | ₼</option>
+                        <option id="USD" value="1">USD | $</option>
+                        <option id="EUR" value="2">EUR | €</option>
+                    </select><br>
+                    <button type="submit" id="progress-button" onclick="ProgressButton()">Progress</button>
+                </form>
+            </div>
+        </div>
+        <div id="right-container">
+            <button id="user-logout" onclick="logout()">Log Out</button>
+            <div id="history-container">
+                <h3 id="history-title"><i class="fa-solid fa-clock-rotate-left" style="color:#0a2647;"></i>Transaction History</h3>
+                <div id="history-entries">
+                    <!-- Transaction history entries will be appended here -->
+                </div>
+                <button id="clear-history-button" onclick="ClearHistory()">Clear History</button>
+            </div>
+        </div>
+    </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    // LocalStorage-dan aktiv istifadəçini götür
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if(!currentUser){
+        alert("Please login first!");
+        window.location.href="login.html";
+        return;
+    }
+
+    // İstifadəçilər siyahısı
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const amountDisplay = document.getElementById("amount-int");
+    const historyContainer = document.getElementById("history-entries");
+    const opInput = document.getElementById("operation-number");
+    const depositInput = document.getElementById("initial-deposit");
+    const currencySelect = document.getElementById("currency-select");
+
+    // İlk balans və tarixçə göstər
+    renderBalance();
+    renderHistory();
+
+    // Form submit olarkən səhifənin yenilənməsinin qarşısını al
+    document.getElementById("bank-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        progressTransaction();
+    });
+
+    function progressTransaction() {
+        const opNumber = opInput.value.trim();
+        const depositValue = parseFloat(depositInput.value.trim());
+        const currency = currencySelect.value;
+
+        if(opNumber === "" || isNaN(depositValue) || depositValue <= 0){
+            alert("Please fill all fields correctly.");
+            return;
+        }
+
+        // Valyuta çevirmə (AZN bazaya çevrilir)
+        let amountInAZN;
+        if(currency === "0") amountInAZN = depositValue;          // AZN
+        else if(currency === "1") amountInAZN = depositValue * 1.7; // USD -> AZN
+        else if(currency === "2") amountInAZN = depositValue * 1.9; // EUR -> AZN
+
+        let type = "";
+
+        if(opNumber === "1"){ // Depozit
+            currentUser.amount = (currentUser.amount || 0) + amountInAZN;
+            type = "Deposit";
+        } else if(opNumber === "2"){ // Çıxarış
+            if(amountInAZN > (currentUser.amount || 0)){
+                alert("Not enough balance!");
+                return;
+            }
+            currentUser.amount -= amountInAZN;
+            type = "Withdrawal";
+        } else {
+            alert("Invalid operation number! Use 1 for Deposit, 2 for Withdrawal.");
+            return;
+        }
+
+        // Tarixçəyə əlavə et
+        if(!currentUser.history) currentUser.history = [];
+        currentUser.history.unshift({
+            type: type,
+            amount: amountInAZN.toFixed(2),
+            currency: "AZN",
+            date: new Date().toLocaleString()
+        });
+
+        // LocalStorage-a yenilə
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        const index = users.findIndex(u => u.email === currentUser.email);
+        if(index !== -1){
+            users[index] = currentUser;
+            localStorage.setItem("users", JSON.stringify(users));
+        }
+
+        // UI yenilə
+        renderBalance();
+        renderHistory();
+
+        // Formu sıfırla
+        opInput.value = "";
+        depositInput.value = "";
+        currencySelect.value = "0";
+    }
+
+    function renderBalance(){
+        amountDisplay.textContent = (currentUser.amount || 0).toFixed(2);
+    }
+
+    function renderHistory(){
+        historyContainer.innerHTML = "";
+        if(!currentUser.history || currentUser.history.length === 0){
+            historyContainer.innerHTML = "<p>No transactions yet.</p>";
+            return;
+        }
+        currentUser.history.forEach(tx => {
+            const div = document.createElement("div");
+            div.classList.add("history-entry");
+            let icon = tx.type === "Deposit" ? 
+                '<i class="fa-solid fa-arrow-down" style="color:green;"></i>' :
+                '<i class="fa-solid fa-arrow-up" style="color:red;"></i>';
+            div.innerHTML = `${icon} <strong>${tx.type}</strong> of ${tx.amount} ${tx.currency}<br><small>${tx.date}</small>`;
+            historyContainer.appendChild(div);
+        });
+    }
+
+    window.ClearHistory = function(){
+        if(confirm("Clear transaction history?")){
+            currentUser.history = [];
+            localStorage.setItem("currentUser", JSON.stringify(currentUser));
+            const index = users.findIndex(u => u.email === currentUser.email);
+            if(index !== -1){ users[index] = currentUser; localStorage.setItem("users", JSON.stringify(users)); }
+            renderHistory();
+        }
+    }
+
+    window.logout = function(){
+        localStorage.removeItem("currentUser");
+        window.location.href="LoginPage.html";
+    }
+});
+
+function logout() {
+    window.location.href="LoginPage.html";
+}
+</script>
+</body>
+</html>

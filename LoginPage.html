@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bank Login</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" />
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;700&display=swap");
+* { box-sizing: border-box; font-family: 'Fredoka', sans-serif; margin:0; padding:0; }
+body { height:100vh; display:flex; justify-content:center; align-items:center; background: linear-gradient(135deg, #6a11cb, #2575fc); }
+#login-container { background:#fff; padding:40px 30px; border-radius:20px; width:350px; box-shadow:0 15px 25px rgba(0,0,0,0.2); text-align:center; }
+#login-container h2 { margin-bottom:30px; color:#0a2647; }
+.input-group { position:relative; margin-bottom:25px; }
+.input-group i { position:absolute; top:12px; left:10px; color:#6a11cb; }
+input[type="text"], input[type="password"] { width:100%; padding:12px 40px; border-radius:10px; border:1px solid #ccc; outline:none; transition:0.3s; }
+input:focus { border-color:#2575fc; box-shadow:0 0 5px #2575fc; }
+button { width:100%; padding:12px; background: linear-gradient(135deg, #6a11cb, #2575fc); border:none; border-radius:10px; color:#fff; font-size:16px; font-weight:bold; cursor:pointer; transition:0.3s; }
+button:hover { opacity:0.9; }
+#login-footer { margin-top:20px; font-size:14px; color:#555; }
+#login-footer a { color:#2575fc; text-decoration:none; }
+#login-footer a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div id="login-container">
+    <h2><i class="fa-solid fa-university"></i> Bank Login</h2>
+    <div class="input-group">
+        <i class="fa-solid fa-user"></i>
+        <input type="text" id="email" placeholder="Email">
+    </div>
+    <div class="input-group">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" id="password" placeholder="Password">
+    </div>
+    <button onclick="login()">Login</button>
+    <div id="login-footer">
+        Don't have an account? <a href="signup.html">Sign up</a>
+    </div>
+</div>
+
+<script>
+function login() {
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if(user) {
+        // Aktiv istifadəçi saxlanılır
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        window.location.href = "UserInterface.html"; // Admin panel və ya User panel
+    } else if(email === "admin" && password === "admin") {
+        // Admin girişi
+        window.location.href = "admin.html";
+    } else {
+        alert("Invalid email or password.");
+    }
+}
+</script>
+
+</body>
+</html>
